@@ -33,7 +33,7 @@
         />
 
     <EditText
-        android:id="@+id/txt_email"
+        android:id="@+id/edt_email"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
@@ -54,7 +54,7 @@
         />
 
     <EditText
-        android:id="@+id/txt_senha"
+        android:id="@+id/edt_senha"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:padding="15dp"
@@ -70,14 +70,14 @@
         android:layout_marginTop="20dp"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
-        app:layout_constraintTop_toBottomOf="@+id/txt_email"
+        app:layout_constraintTop_toBottomOf="@+id/edt_email"
         />
 
     <Button
         android:id="@+id/btn_entrar"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        app:layout_constraintTop_toBottomOf="@+id/txt_senha"
+        app:layout_constraintTop_toBottomOf="@+id/edt_senha"
         app:layout_constraintStart_toStartOf="parent"
         app:layout_constraintEnd_toEndOf="parent"
         android:text="Entrar"
