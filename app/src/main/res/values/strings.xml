@@ -1,3 +1,4 @@
 <resources>
     <string name="app_name">TunesBank</string>
+    <string name="nome_banco"><b><font color="3F51b5">Tunes</font></b>Bank</string>
 </resources>
