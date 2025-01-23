@@ -7,8 +7,12 @@ import com.tunesapp.tunesbank.R
 import com.tunesapp.tunesbank.activities.FormCadastro.FormCadastro
 import com.tunesapp.tunesbank.activities.api.Iapi
 import com.tunesapp.tunesbank.activities.homeBank.HomeBank
+import com.tunesapp.tunesbank.activities.model.LoginResponse
 import com.tunesapp.tunesbank.activities.model.Usuario
+import com.tunesapp.tunesbank.activities.token.TokenManager
 import com.tunesapp.tunesbank.databinding.ActivityFormLoginBinding
+import okhttp3.OkHttpClient
+import okhttp3.logging.HttpLoggingInterceptor
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
 import retrofit2.create
@@ -16,11 +20,19 @@ import retrofit2.create
 class FormLogin : AppCompatActivity() {
 
     lateinit var binding: ActivityFormLoginBinding
+    lateinit var tokenManager: TokenManager
 
     override fun onCreate(savedInstanceState: Bundle?) {
         super.onCreate(savedInstanceState)
         binding = ActivityFormLoginBinding.inflate(layoutInflater)
         setContentView(binding.root)
+
+        tokenManager = TokenManager(this)
+
+        if (tokenManager.getToken() != null) {
+            val intent = Intent(this, HomeBank::class.java)
+            startActivity(intent)
+        }
 
         binding.txtCadastrar.setOnClickListener() {
             val intent = Intent(this, FormCadastro::class.java)
@@ -28,9 +40,19 @@ class FormLogin : AppCompatActivity() {
         }
 
         binding.btnEntrar.setOnClickListener() {
+            val logging = HttpLoggingInterceptor().apply {
+                level = HttpLoggingInterceptor.Level.BODY
+            }
+
+            val httpClient = OkHttpClient.Builder()
+                .addInterceptor(logging)
+                .build()
+
+
             val retrofit = Retrofit.Builder()
                 .baseUrl("https://tunesbank-backend-dwcchyeud5efg8c8.brazilsouth-01.azurewebsites.net/")
                 .addConverterFactory(GsonConverterFactory.create())
+                .client(httpClient)
                 .build()
 
             val api = retrofit.create<Iapi>()
@@ -52,19 +74,27 @@ class FormLogin : AppCompatActivity() {
 
             val call = api.login(usuario)
 
-            call.enqueue(object : retrofit2.Callback<Usuario> {
-                override fun onResponse(call: retrofit2.Call<Usuario>, response: retrofit2.Response<Usuario>) {
-                    if (response.code() == 200) {
-                        binding.txtErro.text = "Login feito com sucesso"
-                        binding.txtErro.setTextColor(getColor(R.color.green))
-                        val intent = Intent(this@FormLogin, HomeBank::class.java)
+            call.enqueue(object : retrofit2.Callback<LoginResponse> {
+                override fun onResponse(call: retrofit2.Call<LoginResponse>, response: retrofit2.Response<LoginResponse>) {
+                    if (response.isSuccessful) {
+                        val loginResponse = response.body()
+                        val usuarioLogado = loginResponse?.usuario
+                        tokenManager.saveToken(loginResponse?.token!!)
+                        val intent = Intent(this@FormLogin, HomeBank::class.java).apply {
+                            putExtra("nome", usuarioLogado?.nome)
+                            putExtra("email", usuarioLogado?.email)
+                            putExtra("agencia", usuarioLogado?.agencia)
+                            putExtra("conta", usuarioLogado?.conta)
+                            putExtra("saldo", usuarioLogado?.saldo)
+                            putExtra("data_criacao", usuarioLogado?.data_criacao)
+                        }
                         startActivity(intent)
-                    }else{
+                    } else {
                         binding.txtErro.text = "Email ou senha incorretos"
                     }
                 }
 
-                override fun onFailure(call: retrofit2.Call<Usuario>, t: Throwable) {
+                override fun onFailure(call: retrofit2.Call<LoginResponse>, t: Throwable) {
                     println("Erro ao fazer login")
                 }
             })

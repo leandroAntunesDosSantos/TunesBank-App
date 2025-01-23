@@ -7,12 +7,136 @@
     android:layout_height="match_parent"
     tools:context=".activities.homeBank.HomeBank">
 
-    <Button
-        android:id="@+id/button"
+    <TextView
+        android:id="@+id/tv_agencia"
         android:layout_width="wrap_content"
         android:layout_height="wrap_content"
-        android:text="Button"
-        app:layout_constraintEnd_toEndOf="parent"
+        android:text=""
+        android:textSize="18sp"
         app:layout_constraintStart_toStartOf="parent"
-        app:layout_constraintTop_toTopOf="parent" />
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_nome"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="24sp"
+        app:layout_constraintStart_toEndOf="@+id/tv_agencia"
+        app:layout_constraintEnd_toStartOf="@+id/btn_sair"
+        app:layout_constraintTop_toTopOf="parent"
+        android:textStyle="bold"
+        />
+
+    <Button
+        android:id="@+id/btn_sair"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text="Sair"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toTopOf="parent"
+        />
+
+    <TextView
+        android:id="@+id/tv_conta"
+        android:layout_width="wrap_content"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_agencia"
+        />
+
+    <TextView
+        android:id="@+id/tv_saldo"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:text=""
+        android:textSize="18sp"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@id/tv_conta"
+        />
+
+    
+    <ImageView
+        android:id="@+id/iv_deposito"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/deposito"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_saldo"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_deposito"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Deposito"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_deposito"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+
+        />
+
+    <ImageView
+        android:id="@+id/iv_transferencia"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/transferencia"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_saldo"
+        android:layout_marginTop="40dp"
+        android:layout_marginEnd="40dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_transferencia"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Transferencia"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintEnd_toEndOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_transferencia"
+        android:layout_marginTop="20dp"
+        android:layout_marginEnd="40dp"
+
+        />
+
+    <ImageView
+        android:id="@+id/iv_extrato"
+        android:layout_width="150dp"
+        android:layout_height="150dp"
+        android:src="@drawable/extrato"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/tv_deposito"
+        android:layout_marginTop="40dp"
+        android:layout_marginStart="40dp"
+        />
+
+    <TextView
+        android:id="@+id/tv_extrato"
+        android:layout_width="150dp"
+        android:layout_height="wrap_content"
+        android:text="Extrato"
+        android:textSize="24sp"
+        android:gravity="center"
+        android:textStyle="bold"
+        android:textColor="@color/black"
+        app:layout_constraintStart_toStartOf="parent"
+        app:layout_constraintTop_toBottomOf="@+id/iv_extrato"
+        android:layout_marginTop="20dp"
+        android:layout_marginStart="40dp"
+
+        />
 </androidx.constraintlayout.widget.ConstraintLayout>
