@@ -2,14 +2,11 @@ package com.tunesapp.tunesbank.activities.FormCadastro
 
 import android.content.Intent
 import android.os.Bundle
-import androidx.activity.enableEdgeToEdge
 import androidx.appcompat.app.AppCompatActivity
-import androidx.core.view.ViewCompat
-import androidx.core.view.WindowInsetsCompat
 import com.tunesapp.tunesbank.R
-import com.tunesapp.tunesbank.activities.api.Iapi
+import com.tunesapp.tunesbank.api.Iapi
 import com.tunesapp.tunesbank.activities.homeBank.HomeBank
-import com.tunesapp.tunesbank.activities.model.Usuario
+import com.tunesapp.tunesbank.model.UsuarioModel
 import com.tunesapp.tunesbank.databinding.ActivityFormCadastroBinding
 import retrofit2.Retrofit
 import retrofit2.converter.gson.GsonConverterFactory
@@ -53,17 +50,17 @@ class FormCadastro : AppCompatActivity() {
                 binding.txtErro.text = "Senhas não conferem"
                 return@setOnClickListener
             }
-            val usuario = Usuario()
+            val usuario = UsuarioModel()
             usuario.nome = nome
             usuario.email = email
             usuario.senha = senha
 
             val call = api.cadastrar(usuario)
 
-            call.enqueue(object : retrofit2.Callback<Usuario> {
+            call.enqueue(object : retrofit2.Callback<UsuarioModel> {
                 override fun onResponse(
-                    call: retrofit2.Call<Usuario>,
-                    response: retrofit2.Response<Usuario>
+                    call: retrofit2.Call<UsuarioModel>,
+                    response: retrofit2.Response<UsuarioModel>
                 ) {
                     if (response.code() == 200) {
                         binding.txtErro.text = "Cadastro feito com sucesso"
@@ -75,7 +72,7 @@ class FormCadastro : AppCompatActivity() {
                     }
                 }
 
-                override fun onFailure(call: retrofit2.Call<Usuario>, t: Throwable) {
+                override fun onFailure(call: retrofit2.Call<UsuarioModel>, t: Throwable) {
                     println("Erro ao cadastrar")
                 }
             })

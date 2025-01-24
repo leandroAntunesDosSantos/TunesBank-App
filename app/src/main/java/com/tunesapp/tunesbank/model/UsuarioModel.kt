@@ -1,6 +1,6 @@
-package com.tunesapp.tunesbank.activities.model
+package com.tunesapp.tunesbank.model
 
-data class Usuario(
+data class UsuarioModel(
     var nome: String = "",
     var email: String = "",
     var senha: String = "",
@@ -11,6 +11,10 @@ data class Usuario(
 )
 
 data class LoginResponse(
-    val usuario: Usuario,
+    val usuario: UsuarioModel,
     val token: String
+)
+
+data class DepositoModel(
+    val valor: Double
 )

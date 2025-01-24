@@ -3,12 +3,11 @@ package com.tunesapp.tunesbank.activities.FormLogin
 import android.content.Intent
 import android.os.Bundle
 import androidx.appcompat.app.AppCompatActivity
-import com.tunesapp.tunesbank.R
 import com.tunesapp.tunesbank.activities.FormCadastro.FormCadastro
-import com.tunesapp.tunesbank.activities.api.Iapi
+import com.tunesapp.tunesbank.api.Iapi
 import com.tunesapp.tunesbank.activities.homeBank.HomeBank
-import com.tunesapp.tunesbank.activities.model.LoginResponse
-import com.tunesapp.tunesbank.activities.model.Usuario
+import com.tunesapp.tunesbank.model.LoginResponse
+import com.tunesapp.tunesbank.model.UsuarioModel
 import com.tunesapp.tunesbank.activities.token.TokenManager
 import com.tunesapp.tunesbank.databinding.ActivityFormLoginBinding
 import okhttp3.OkHttpClient
@@ -68,7 +67,7 @@ class FormLogin : AppCompatActivity() {
                 return@setOnClickListener
             }
 
-            val usuario = Usuario()
+            val usuario = UsuarioModel()
             usuario.email = email
             usuario.senha = senha
 
@@ -78,16 +77,8 @@ class FormLogin : AppCompatActivity() {
                 override fun onResponse(call: retrofit2.Call<LoginResponse>, response: retrofit2.Response<LoginResponse>) {
                     if (response.isSuccessful) {
                         val loginResponse = response.body()
-                        val usuarioLogado = loginResponse?.usuario
                         tokenManager.saveToken(loginResponse?.token!!)
-                        val intent = Intent(this@FormLogin, HomeBank::class.java).apply {
-                            putExtra("nome", usuarioLogado?.nome)
-                            putExtra("email", usuarioLogado?.email)
-                            putExtra("agencia", usuarioLogado?.agencia)
-                            putExtra("conta", usuarioLogado?.conta)
-                            putExtra("saldo", usuarioLogado?.saldo)
-                            putExtra("data_criacao", usuarioLogado?.data_criacao)
-                        }
+                        val intent = Intent(this@FormLogin, HomeBank::class.java)
                         startActivity(intent)
                     } else {
                         binding.txtErro.text = "Email ou senha incorretos"

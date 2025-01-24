@@ -4,11 +4,10 @@ import android.content.Context
 import android.content.SharedPreferences
 
 class TokenManager(context: Context) {
-
     private val prefs: SharedPreferences = context.getSharedPreferences("prefs", Context.MODE_PRIVATE)
 
-    fun saveToken(token: String) {
-        prefs.edit().putString("token", token).apply()
+    fun hasToken(): Boolean {
+        return prefs.contains("token")
     }
 
     fun getToken(): String? {
@@ -18,4 +17,11 @@ class TokenManager(context: Context) {
     fun deleteToken() {
         prefs.edit().remove("token").apply()
     }
+
+    fun saveToken(token: String) {
+        prefs.edit().putString("token", token).apply()
+    }
 }
+
+
+
